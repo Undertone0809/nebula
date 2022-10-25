@@ -10,8 +10,8 @@
       <footer-view/>
     </el-footer>
 
-    <div v-if="false && isShow" style="position: fixed;bottom: 10vh;right: 3vw;">
-      <el-col v-if="isPostArticle" :xs="0" :xl="24">
+    <div v-if="isShow" style="position: fixed;bottom: 10vh;right: 3vw;">
+      <el-col v-if="false && isPostArticle" :xs="0" :xl="24">
         <el-popover
           placement="right"
           width="20"
@@ -20,7 +20,7 @@
             <el-image :src="gzh"></el-image>
           </el-col>
           <el-col class="text-center">
-            <span>扫码关注公众号</span>
+            <span>Forest Github</span>
           </el-col>
           <el-button slot="reference" circle><img style="width: 14px;height: 14px;" :src="wx" fit="cover"/>
           </el-button>

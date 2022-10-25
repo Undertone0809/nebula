@@ -6,9 +6,10 @@
     <el-main>
       <nuxt :nuxt-child-key="$route.name" />
     </el-main>
-    <el-footer style="height: 6rem;">
+
+    <!-- <el-footer style="height: 6rem;">
       <footer-view/>
-    </el-footer>
+    </el-footer> -->
   </el-container>
 </template>
 

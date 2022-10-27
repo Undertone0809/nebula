@@ -115,6 +115,7 @@
               </el-col>
             </el-col>
           </el-card>
+          <!-- TODO -->
           <el-col :id="'original-' + comment.commentOriginalCommentId" style="background-color: #d9d9d9;padding-left: 1.5rem;
             margin-top: 0.3rem;border-radius: 0.5rem;cursor: pointer;display: none;">
             <el-col :span="2" v-show="comment.commentOriginalCommentId">
@@ -122,7 +123,7 @@
                 <span>{{ comment.commentOriginalAuthorNickname }} :</span>
               </p>
             </el-col>
-            <el-col :span="20" v-show="comment.commentOriginalCommentId">
+            <el-col style="margin-top:.8rem;" :span="20" v-show="comment.commentOriginalCommentId">
               <div class="vditor-reset comment-content" v-html="comment.commentOriginalContent"></div>
             </el-col>
           </el-col>

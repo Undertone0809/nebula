@@ -54,8 +54,9 @@
                     <el-button size="mini" v-if="hasPermissions" @click="handleCommand('edit')" plain>编辑文章</el-button>
                     <template v-if="isAdmin">
                       <el-button size="mini" @click="handleCommand('editTag')" plain>编辑标签</el-button>
-                      <el-button v-if="isPerfect" size="mini" @click="cancelPreference" plain>取消优选</el-button>
-                      <el-button v-else size="mini" @click="setPreference" plain>设为优选</el-button>
+                      <!-- TODO -->
+                      <!-- <el-button v-if="isPerfect" size="mini" @click="cancelPreference" plain>取消优选</el-button> -->
+                      <!-- <el-button v-else size="mini" @click="setPreference" plain>设为优选</el-button> -->
                     </template>
                     <template v-else-if="hasPermissions">
                       <el-button size="mini" @click="handleCommand('editTag')" plain>编辑标签</el-button>
@@ -213,11 +214,11 @@ export default {
   },
   head() {
     return {
-      title: this.article.articleTitle || 'RYMCU - 嵌入式知识学习交流平台',
+      title: this.article.articleTitle || 'Forest - 知识学习交流平台',
       meta: [
         {
           name: 'keywords',
-          content: this.article.articleTags || 'RYMCU'
+          content: this.article.articleTags || 'Forest'
         },
         {
           name: 'description',
@@ -225,7 +226,7 @@ export default {
         },
         {
           name: 'site_name',
-          content: 'RYMCU'
+          content: 'Forest'
         },
         {
           name: 'url',
@@ -233,7 +234,7 @@ export default {
         },
         {
           name: 'og:title',
-          content: this.article.articleTitle + ' - RYMCU'
+          content: this.article.articleTitle + ' - Forest'
         },
         {
           name: 'og:description',
@@ -241,7 +242,7 @@ export default {
         },
         {
           name: 'og:site_name',
-          content: 'RYMCU'
+          content: 'Forest'
         },
         {
           name: 'og:url',

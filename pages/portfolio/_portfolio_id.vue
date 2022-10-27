@@ -101,11 +101,11 @@ export default {
   },
   head() {
     return {
-      title: this.portfolio.portfolioTitle || 'RYMCU - 嵌入式知识学习交流平台',
+      title: this.portfolio.portfolioTitle || 'Forest - 知识学习交流平台',
       meta: [
         {
           name: 'keywords',
-          content: this.portfolio.portfolioTags || 'RYMCU'
+          content: this.portfolio.portfolioTags || 'Forest'
         },
         {
           name: 'description',
@@ -113,7 +113,7 @@ export default {
         },
         {
           name: 'site_name',
-          content: 'RYMCU'
+          content: 'Forest'
         },
         {
           name: 'url',
@@ -121,7 +121,7 @@ export default {
         },
         {
           name: 'og:title',
-          content: this.portfolio.portfolioTitle + ' - RYMCU'
+          content: this.portfolio.portfolioTitle + ' - Forest'
         },
         {
           name: 'og:description',
@@ -129,7 +129,7 @@ export default {
         },
         {
           name: 'og:site_name',
-          content: 'RYMCU'
+          content: 'Forest'
         },
         {
           name: 'og:url',

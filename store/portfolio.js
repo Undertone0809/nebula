@@ -118,6 +118,7 @@ export const actions = {
       .$get(`${BASE_API_PATH}/portfolio/${params.portfolio_id}`)
       .then(response => {
         return new Promise(resolve => {
+          console.log(1)
           commit('updateDetailData', response)
           commit('updateDetailFetching', false)
           resolve(response)
@@ -127,6 +128,7 @@ export const actions = {
         })
       })
       .catch(error => {
+        console.log(2)
         commit('updateDetailFetching', false)
         return Promise.reject(error)
       })
@@ -139,11 +141,14 @@ export const actions = {
           page: params.page || 1
         }
       })
+      // TODO _vm.articles is undefined的问题所在，和axios返回code=0的矛盾
       .then(response => {
+        console.log(3)
         commit('updateArticleList', response)
         commit('updateDetailFetching', false)
       })
       .catch(error => {
+        console.log(4)
         commit('updateDetailFetching', false)
       })
   },

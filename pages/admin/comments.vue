@@ -40,11 +40,12 @@
                   </el-link>
                   <small class="text-default" style="margin: 0 0.2rem">回复了</small><span style="font-weight: bold;"> {{comment.commentOriginalAuthorNickname}}</span>
                 </el-col>
-                <el-col :span="8" class="text-right" style="padding-right: 1rem;">
+                <!-- TODO cancel original commment -->
+                <!-- <el-col :span="8" class="text-right" style="padding-right: 1rem;">
                   <el-link rel="nofollow" :underline="false" title="查看原评论"
                            @click.native="toggleShowOriginalComment(comment.commentOriginalCommentId)"><i
                     class="el-icon-reading"></i> 查看原评论</el-link>
-                </el-col>
+                </el-col> -->
               </el-col>
               <el-col v-show="!comment.commentOriginalCommentId">
                 <el-col :span="16">

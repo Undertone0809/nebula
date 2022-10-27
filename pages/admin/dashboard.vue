@@ -78,8 +78,8 @@
             </el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <el-button v-if="scope.row.articlePerfect === '1'" size="mini" @click="cancelPreference(scope.$index, scope.row.idArticle)" plain>取消优选</el-button>
-                <el-button v-else size="mini" @click="setPreference(scope.$index, scope.row.idArticle)" plain>设为优选</el-button>
+                <!-- <el-button v-if="scope.row.articlePerfect === '1'" size="mini" @click="cancelPreference(scope.$index, scope.row.idArticle)" plain>取消优选</el-button>
+                <el-button v-else size="mini" @click="setPreference(scope.$index, scope.row.idArticle)" plain>设为优选</el-button> -->
                 <el-button size="mini" type="primary"
                            @click="updateTags(scope.$index, scope.row)" plain>编辑标签
                 </el-button>
@@ -202,6 +202,7 @@
 
       </div>
     </el-col>
+
     <el-col class="mt-2rem">
       <div id="lastThirtyDays" style="width: 100%;height: 500px;"></div>
     </el-col>
@@ -237,6 +238,7 @@
         </edit-tags>
       </el-dialog>
     </el-col>
+  
   </el-row>
 </template>
 
@@ -593,8 +595,11 @@ export default {
   },
   mounted() {
     this.$store.commit("setActiveMenu", "admin-dashboard");
-    this.initLastThirtyDaysCharts(this.lastThirtyDays)
-    this.initHistoryCharts(this.history)
+    // TODO temporarily solve the problem that can not render echart firstly.
+    setTimeout(() => {
+      this.initLastThirtyDaysCharts(this.lastThirtyDays)
+      this.initHistoryCharts(this.history)
+    }, 1000);
   }
 }
 </script>

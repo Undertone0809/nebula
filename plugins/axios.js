@@ -24,12 +24,14 @@ export default function ({app, $axios, store, redirect}) {
         message = response.data.message
       }
       if (response.data.success) {
-        console.warn(`[zee debug] go here ${JSON.stringify(response.data)}`)
+        console.warn(`[zee debug] go success: ${JSON.stringify(response.data)}`)
         resolve(response.data);
       } else {
-        console.warn(`[zee debug] go here ${JSON.stringify(response.data)}`)
+        console.warn(`[zee debug] go other resCode: ${JSON.stringify(response.data)}`)
         if (response.data.code === 0) {
-          Message.error(message ? message : '服务异常')
+          // TODO 暂时注释
+          // resolve(response.data);
+          // Message.error(message ? message : '服务异常')
         } else if (response.data.code === 401) {
           Cookie.remove('auth');
           store.commit('setAuth', null);
@@ -41,10 +43,12 @@ export default function ({app, $axios, store, redirect}) {
         } else if (response.data.code === 404) {
           Message.error('操作失败，请稍后再试......')
         } else if (response.data.code === 500) {
-          Message.error(`服务器正在开小差，请稍后再试...... [info] ${JSON.stringify(response.data)}`)
+          // TODO暂时注释
+          // Message.error(`服务器正在开小差，请稍后再试...... [info] ${JSON.stringify(response.data)}`)
         } else {
-          console.warn(`[zee debug] go here`)
-          if (response.data.message) Message.error(response.data.message);
+          // TODO暂时注释
+          // console.warn(`[zee debug] go here`)
+          // if (response.data.message) Message.error(response.data.message);
         }
         reject(response);
       }
@@ -55,7 +59,7 @@ export default function ({app, $axios, store, redirect}) {
     if (code === 400) {
       redirect('/400');
     } else {
-      console.log(error.data);
+      console.log(`[zee debug] go error: ${JSON.stringify(error.data)}`);
     }
   })
 }

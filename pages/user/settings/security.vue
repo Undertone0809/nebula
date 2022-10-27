@@ -111,7 +111,7 @@ export default {
           if (res.message) {
             _ts.$message.error(res.message);
           } else {
-            _ts.$set(_ts, 'user', res.user);
+            _ts.$set(_ts, 'user', res);
           }
         }
       })
@@ -194,11 +194,11 @@ export default {
               password: password
             }).then(function (res) {
               if (res) {
-                _ts.$message(res.message);
                 let user = _ts.user;
                 user.password = '';
                 user.confirmPassword = '';
                 _ts.$set(_ts, 'user', user);
+                _ts.$message.success('更改成功')
               }
             })
           } else {

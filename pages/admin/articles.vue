@@ -62,8 +62,8 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button v-if="scope.row.articlePerfect === '1'" size="mini" @click="cancelPreference(scope.$index, scope.row.idArticle)" plain>取消优选</el-button>
-            <el-button v-else size="mini" @click="setPreference(scope.$index, scope.row.idArticle)" plain>设为优选</el-button>
+            <!-- <el-button v-if="scope.row.articlePerfect === '1'" size="mini" @click="cancelPreference(scope.$index, scope.row.idArticle)" plain>取消优选</el-button>
+            <el-button v-else size="mini" @click="setPreference(scope.$index, scope.row.idArticle)" plain>设为优选</el-button> -->
             <el-button size="mini" type="primary"
                        @click="updateTags(scope.$index, scope.row)" plain>编辑标签
             </el-button>
@@ -155,7 +155,23 @@ export default {
       _ts.$axios.$patch("/api/admin/article/update-perfect", {
         idArticle: idArticle,
         articlePerfect: '1'
+        // TODO res code == 0 ,so reverse resoluve and reject temporarily
       }).then(function (res) {
+        if (res) {
+          if (res.success) {
+            _ts.$store.commit('admin/updateArticlePreference', {
+              index: index,
+              idArticle: idArticle,
+              articlePerfect: '1'
+            })
+            _ts.$message.success("设置成功!");
+          } else {
+            _ts.$message.error(_ts.message);
+          }
+        }
+        // TODO temporary code
+      },res =>{
+        console.log(`[fucking here]`)
         if (res) {
           if (res.success) {
             _ts.$store.commit('admin/updateArticlePreference', {
@@ -191,6 +207,9 @@ export default {
       })
     },
     updateTags(index, article) {
+      // console.log(index)
+      // console.log(JSON.stringify(article))
+      // TODO data can not update
       let _ts = this
       _ts.$set(_ts, 'index', index);
       _ts.$set(_ts, 'idArticle', article.idArticle);

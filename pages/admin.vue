@@ -28,7 +28,7 @@
         </el-tabs>
       </el-col>
     </el-col>
-    <el-col v-else class="text-center">
+    <!-- <el-col v-else class="text-center">
       <el-alert
         title="用户无权限"
         type="warning"
@@ -36,7 +36,7 @@
         show-icon
         :closable="false">
       </el-alert>
-    </el-col>
+    </el-col> -->
   </el-row>
 </template>
 
@@ -83,13 +83,13 @@ export default {
           icon: 'el-icon-s-check',
           closable: true
         },
-        {
-          title: '专题管理',
-          name: 'admin-topics',
-          path: '/admin/topics',
-          icon: 'el-icon-postcard',
-          closable: true
-        },
+        // {
+        //   title: '专题管理',
+        //   name: 'admin-topics',
+        //   path: '/admin/topics',
+        //   icon: 'el-icon-postcard',
+        //   closable: true
+        // },
         {
           title: '标签管理',
           name: 'admin-tags',
@@ -97,34 +97,34 @@ export default {
           icon: 'el-icon-price-tag',
           closable: true
         },
-        {
-          title: '银行管理',
-          name: 'admin-banks',
-          path: '/admin/banks',
-          icon: 'el-icon-office-building',
-          closable: true
-        },
-        {
-          title: '银行卡管理',
-          name: 'admin-bank-accounts',
-          path: '/admin/bank-accounts',
-          icon: 'el-icon-bank-card',
-          closable: true
-        },
-        {
-          title: '货币规则',
-          name: 'admin-currency-rules',
-          path: '/admin/currency-rules',
-          icon: 'el-icon-document',
-          closable: true
-        },
-        {
-          title: '产品管理',
-          name: 'admin-products',
-          path: '/admin/products',
-          icon: 'el-icon-box',
-          closable: true
-        }
+        // {
+        //   title: '银行管理',
+        //   name: 'admin-banks',
+        //   path: '/admin/banks',
+        //   icon: 'el-icon-office-building',
+        //   closable: true
+        // },
+        // {
+        //   title: '银行卡管理',
+        //   name: 'admin-bank-accounts',
+        //   path: '/admin/bank-accounts',
+        //   icon: 'el-icon-bank-card',
+        //   closable: true
+        // },
+        // {
+        //   title: '货币规则',
+        //   name: 'admin-currency-rules',
+        //   path: '/admin/currency-rules',
+        //   icon: 'el-icon-document',
+        //   closable: true
+        // },
+        // {
+        //   title: '产品管理',
+        //   name: 'admin-products',
+        //   path: '/admin/products',
+        //   icon: 'el-icon-box',
+        //   closable: true
+        // }
       ]
     }
   },

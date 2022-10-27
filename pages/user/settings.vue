@@ -32,7 +32,7 @@
         <nuxt :nuxt-child-key="$route.name" />
       </el-col>
     </el-col>
-    <el-col v-else class="text-center">
+    <!-- <el-col v-else class="text-center">
       <el-alert
         title="用户无权限"
         type="warning"
@@ -40,7 +40,7 @@
         show-icon
         :closable="false">
       </el-alert>
-    </el-col>
+    </el-col> -->
   </el-row>
 </template>
 

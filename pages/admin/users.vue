@@ -74,6 +74,7 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
+            <!-- TODO if onwer -->
             <el-button size="mini" @click="handleRole(scope.$index, scope.row)" plain>授权</el-button>
             <el-button v-if="scope.row.status == 1" size="mini" type="primary"
                        @click="toggleStatus(scope.$index, scope.row)" plain>启用
@@ -150,6 +151,12 @@ export default {
     },
     handleRole(index, user) {
       let _ts = this;
+      // TODO
+      // console.log(`[zee] ${JSON.stringify(_ts.user)} `)
+      // if (localStorage.getItem('user').idUser == user.idUser) {
+      //   _ts.$message.error('不能编辑自己')
+      //   return
+      // }
       _ts.$set(_ts, 'idUser', user.idUser);
       _ts.$axios.$get('/api/admin/user/' + user.idUser + '/role')
         .then(function (res) {
@@ -159,6 +166,11 @@ export default {
     },
     toggleStatus(index, user) {
       let _ts = this;
+      // TODO
+      // if (localStorage.getItem('user').idUser == user.idUser) {
+      //   _ts.$message.error('不能编辑自己')
+      //   return
+      // }
       let title, status;
       if (user.status === '0') {
         title = '禁用';

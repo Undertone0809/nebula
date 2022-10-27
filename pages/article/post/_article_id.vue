@@ -44,14 +44,14 @@
         <el-button v-else type="primary" :loading="doLoading" @click="postArticle" plain>发布</el-button>
       </el-col>
     </el-col>
-    <el-col v-else class="text-center">
+    <!-- <el-col v-else class="text-center">
       <el-alert
         title="用户无权限"
         type="warning"
         center
         show-icon
         :closable="false">
-      </el-alert>
+      </el-alert> -->
     </el-col>
   </el-row>
 </template>

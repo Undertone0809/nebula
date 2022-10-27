@@ -12,9 +12,9 @@
     </el-col>
     <el-col v-for="tag in tags.list" :key="tag.idTag">
       <el-card style="margin: .5rem;">
-        <el-col :span="1">
+        <!-- <el-col :span="1">
           <el-avatar shape="square" :src="tag.tagIconPath" fit="scale-down"></el-avatar>
-        </el-col>
+        </el-col> -->
         <el-col :span="20">
           <el-col>
             <span class="tag-title">{{ tag.tagTitle }}</span>

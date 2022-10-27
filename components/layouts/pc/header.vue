@@ -95,7 +95,7 @@
                 </el-dropdown-item>
                 <el-dropdown-item command="user">个人中心</el-dropdown-item>
                 <!-- <el-dropdown-item command="answer">每日一题</el-dropdown-item> -->
-                <el-dropdown-item command="drafts" divided>我的草稿</el-dropdown-item>
+                <!-- <el-dropdown-item command="drafts" divided>我的草稿</el-dropdown-item> -->
                 <!-- <el-dropdown-item command="wallet">我的钱包</el-dropdown-item> -->
                 <el-dropdown-item command="user-info" divided>设置</el-dropdown-item>
                 <el-dropdown-item command="admin-dashboard" v-if="hasPermissions">系统管理</el-dropdown-item>

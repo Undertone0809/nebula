@@ -4,8 +4,9 @@
       <h1>登录记录</h1>
     </el-col>
     <el-col>
+      <!-- TODO: modify here -->
       <el-table
-        :data="records.records"
+        :data="records.list"
         style="width: 100%">
         <el-table-column
           label="登录 IP"
@@ -25,15 +26,16 @@
       </el-table>
     </el-col>
     <el-col>
+      <!-- TODO 修改了这里，对照git -->
       <el-pagination
         :hide-on-single-page="true"
         @current-change="currentChange"
         @size-change="sizeChange"
-        :current-page="records.pagination.currentPage"
+        :current-page="records.pageNum"
         :page-sizes="[10, 20, 50, 100]"
-        :page-size="records.pagination.pageSize"
+        :page-size="records.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="records.pagination.total">
+        :total="records.total">
       </el-pagination>
     </el-col>
   </el-row>
@@ -61,15 +63,17 @@ export default {
       let _ts = this;
       let search = {
         size: size,
-        page: _ts.records.pagination.currentPage
+        // TODO modify here
+        page: _ts.records.nextPage - 1
       }
       _ts.$emit('currentChange', search);
     },
     currentChange(page) {
       let _ts = this;
       let search = {
-        page: page,
-        size: _ts.records.pagination.pageSize
+        // TODO modify here
+        size: _ts.records.pageSize,
+        page: page
       }
       _ts.$emit('currentChange', search);
     }

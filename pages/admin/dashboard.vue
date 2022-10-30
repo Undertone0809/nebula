@@ -203,6 +203,7 @@
       </div>
     </el-col>
 
+    <!-- chart -->
     <el-col class="mt-2rem">
       <div id="lastThirtyDays" style="width: 100%;height: 500px;"></div>
     </el-col>

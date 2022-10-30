@@ -351,8 +351,9 @@
       let _ts = this;
       let user = _ts.user;
       _ts.$disp.on('clear_notificationNumbers', () => {
-        console.warn(`[zee debug] clear data`);
-        notificationNumbers
+        // TODO No vaildation
+        // console.warn(`[zee debug] clear data`);
+        _ts.notificationNumbers = 0;
       });
       if (user) {
         _ts.getUnreadNotifications();

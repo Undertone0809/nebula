@@ -34,7 +34,7 @@
         </el-select>
       </el-col>
       <el-col v-if="!isEdit" style="margin-top: 1rem;padding-right:3rem;text-align: right;">
-        <el-button :loading="doLoading" @click="saveArticle" plain>保存草稿</el-button>
+        <!-- <el-button :loading="doLoading" @click="saveArticle" plain>保存草稿</el-button> -->
         <el-button type="primary" :loading="doLoading" @click="postArticle" plain>发布</el-button>
       </el-col>
       <el-col v-else style="margin-top: 1rem;padding-right:3rem;text-align: right;">

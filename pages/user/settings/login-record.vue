@@ -28,7 +28,6 @@ export default {
   },
   methods: {
     handleCurrentChange(search) {
-      console.log(`[debug] search params : ${JSON.stringify(search)}`)
       let _ts = this;
       _ts.$axios.$get('api/user-info/login-records', {
         params: {
@@ -37,7 +36,6 @@ export default {
           rows: search.size || 10
         }
       }).then(function (res) {
-        console.log(`[zee debug] login records_1: ${JSON.stringify(res)}`)
         if (res) {
           _ts.records = res
         }
@@ -51,7 +49,6 @@ export default {
           idUser: _ts.idUser
         }
       }).then(function (res) {
-        console.log(`[zee debug] login records: ${JSON.stringify(res)}`)
         if (res) {
           _ts.records = res
         }

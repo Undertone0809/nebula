@@ -179,7 +179,6 @@ export const actions = {
         commit('updateFetching', false);
       });
   },
-  // TODO modify here
   fetchAllArticles({commit}, params = {}) {
     if (params && params.reset === '0') {
       return true;

@@ -4,7 +4,7 @@
       <h1>登录记录</h1>
     </el-col>
     <el-col>
-      <!-- TODO: modify here -->
+      <!-- TODO: commit to master -->
       <el-table
         :data="records.list"
         style="width: 100%">
@@ -26,7 +26,7 @@
       </el-table>
     </el-col>
     <el-col>
-      <!-- TODO 修改了这里，对照git -->
+      <!-- TODO commit to master -->
       <el-pagination
         :hide-on-single-page="true"
         @current-change="currentChange"
@@ -63,15 +63,15 @@ export default {
       let _ts = this;
       let search = {
         size: size,
-        // TODO modify here
-        page: _ts.records.nextPage - 1
+        // TODO commit to master
+        page: _ts.records.pageNum
       }
       _ts.$emit('currentChange', search);
     },
     currentChange(page) {
       let _ts = this;
       let search = {
-        // TODO modify here
+        // TODO commit to master
         size: _ts.records.pageSize,
         page: page
       }

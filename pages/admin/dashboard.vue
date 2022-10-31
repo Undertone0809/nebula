@@ -560,7 +560,7 @@ export default {
       _ts.$set(_ts, 'articleTags', article.articleTags);
       _ts.$set(_ts, 'tagsDialogVisible', true);
     },
-    // TODO  temporary modify
+    // TODO  commit to master
     toggleStatus(index, article) {     
       let _ts = this
       
@@ -599,7 +599,7 @@ export default {
       _ts.$axios.$patch("/api/admin/article/update-perfect", {
         idArticle: idArticle,
         articlePerfect: '1'
-        // TODO
+        // TODO commit to master
       }).then(res => {        
         _ts.$store.commit('admin/updateArticlePreference', {
           index: index,
@@ -672,7 +672,6 @@ export default {
   },
   mounted() {
     this.$store.commit("setActiveMenu", "admin-dashboard");
-    // TODO commit to master
     setTimeout(() => {
       this.initLastThirtyDaysCharts(this.lastThirtyDays)
       this.initHistoryCharts(this.history)

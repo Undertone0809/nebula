@@ -61,7 +61,7 @@
           </el-link>
           <el-link :underline="false" rel="nofollow" style="padding-left: 10px;padding-right: 10px;">
             <el-dropdown @command="handleCommand" trigger="click">
-              <el-badge :value="notificationNumbers" class="item">
+              <el-badge :value="notificationNumbers" :hidden="hiddenBadge" class="item">
                 <el-link :underline="false" rel="nofollow" style="font-size: 1.4rem;">
                   <svg height="24" style="fill: rgba(0, 0, 0, 1);" viewBox="0 0 24 24" width="24"
                        xmlns="http://www.w3.org/2000/svg">
@@ -201,7 +201,8 @@
         notifications: [],
         notificationNumbers: "",
         showPopover: false,
-        autofocus: false
+        autofocus: false,
+        hiddenBadge: true,
       };
     },
     watch: {
@@ -296,6 +297,7 @@
             if (res) {
               _ts.$set(_ts, 'notifications', res.list);
               _ts.$set(_ts, 'notificationNumbers', res.total === 0 ? "" : res.total);
+              if (_ts.notificationNumbers != 0) _ts.hiddenBadge = false;
             }
           })
         }
@@ -350,9 +352,15 @@
     mounted() {
       let _ts = this;
       let user = _ts.user;
+      _ts.$disp.on('notificationNumbers_minus_one', () => {
+        // TODO verified
+        _ts.notificationNumbers --;
+        if (_ts.notificationNumbers == 0) _ts.hiddenBadge = true;
+      });
+
       _ts.$disp.on('clear_notificationNumbers', () => {
-        // TODO No vaildation
-        // console.warn(`[zee debug] clear data`);
+        // TODO verified, but render vanishing state no verified, add hiddenBadge param
+        _ts.hiddenBadge = true;
         _ts.notificationNumbers = 0;
       });
       if (user) {

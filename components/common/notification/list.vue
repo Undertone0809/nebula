@@ -108,6 +108,8 @@ export default {
         _ts.$store.commit('notification/updateState', true)
         _ts.$store.dispatch('notification/fetchList', {page: 1})
       }).catch(error => console.log(error));
+      // TODO modify here
+      _ts.$disp.fire('notificationNumbers_minus_one');
     },
     readAll() {
       let _ts = this;
@@ -115,7 +117,7 @@ export default {
         _ts.$store.commit('notification/updateState', true)
         _ts.$store.dispatch('notification/fetchList', {page: 1})
       }).catch(error => console.log(error));
-      
+      // TODO modify here
       _ts.$disp.fire('clear_notificationNumbers');
     },
     onRouter(notification) {

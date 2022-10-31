@@ -6,27 +6,20 @@
         <el-breadcrumb-item>文章管理</el-breadcrumb-item>
       </el-breadcrumb>
     </el-col>
-    <el-col style="margin-bottom: 1rem;">
-      <el-pagination
-        :hide-on-single-page="true"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="articles.pageNum"
-        :page-sizes="[10, 20, 50, 100]"
-        :page-size="articles.pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="articles.total">
-      </el-pagination>
-    </el-col>
     <el-col>
       <el-table
         :data="articles.list"
         style="width: 100%">
         <el-table-column
-          label="#"
+          type="index"
           width="60"
           prop="idArticle">
         </el-table-column>
+        <!-- <el-table-column
+          label="id"
+          width="60"
+          prop="idArticle">
+        </el-table-column> -->
         <el-table-column
           label="标题"
           prop="articleTitle">
@@ -138,7 +131,7 @@ export default {
     handleSizeChange(pageSize) {
       let _ts = this;
       _ts.$store.dispatch('admin/fetchArticles', {
-        page: _ts.pagination.currentPage,
+        page: _ts.articles.pageNum,
         rows: pageSize
       })
     },
@@ -146,10 +139,27 @@ export default {
       let _ts = this;
       _ts.$store.dispatch('admin/fetchArticles', {
         page: page,
-        rows: _ts.pagination.pageSize
+        rows: _ts.articles.pageSize
       })
     },
-    toggleStatus() {},
+    toggleStatus(index, article) {
+      let _ts = this
+      // copy the object
+      let temp_articles = JSON.parse(JSON.stringify(_ts.articles))
+      if (index == 0) {
+        temp_articles.list.forEach(element => {
+          if (element.idArticle == article.idArticle) element.articleStatus = 1
+        })
+        _ts.$store.commit('updateNewArticlesData', temp_articles)
+        _ts.$message.success('已下架')
+      }else {
+        temp_articles.list.forEach(element => {
+          if (element.idArticle == article.idArticle) element.articleStatus = 0
+        })
+        _ts.$store.commit('updateNewArticlesData', temp_articles)
+        _ts.$message.success('已上架')
+      }
+    },
     setPreference(index, idArticle) {
       let _ts = this;
       _ts.$axios.$patch("/api/admin/article/update-perfect", {

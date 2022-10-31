@@ -6,6 +6,13 @@ const getDefaultDashboardData = () => {
   }
 }
 
+const getDefaultTop10TagsData = () => {
+  return {
+    tags: [],
+    numbers: [],
+  }
+}
+
 const getDefaultLastThirtyDaysData = () => {
   return {
     dates: [],
@@ -41,6 +48,7 @@ export const state = () => {
   return {
     fetching: false,
     data: getDefaultDashboardData(),
+    top10Tags: getDefaultTop10TagsData(),
     lastThirtyDays: getDefaultLastThirtyDaysData(),
     history: getDefaultLastThirtyDaysData(),
     users: getDefaultNewUserData(),
@@ -55,6 +63,9 @@ export const mutations = {
   },
   updateDashboardData(state, action) {
     state.data = action
+  },
+  updateTop10TagsData(state, action) {
+    state.top10Tags = action
   },
   updateLastThirtyDaysData(state, action) {
     state.lastThirtyDays = action
@@ -87,6 +98,24 @@ export const actions = {
       .then(response => {
         commit('updateDashboardFetching', false);
         commit('updateDashboardData', response);
+      })
+      .catch(error => {
+        console.log(error);
+        commit('updateDashboardFetching', false);
+      });
+  },
+  fetchTop10Tags({commit}, params = {}) {
+    if (params && params.reset === '0') {
+      return true;
+    }
+    commit('updateTop10TagsData', getDefaultTop10TagsData())
+    commit('updateDashboardFetching', true)
+
+    return this.$axios
+      .$get(`${DASHBOARD_API_PATH}/top10-tags`)
+      .then(response => {
+        commit('updateDashboardFetching', false);
+        commit('updateTop10TagsData', response);
       })
       .catch(error => {
         console.log(error);

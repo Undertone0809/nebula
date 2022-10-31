@@ -205,6 +205,9 @@
 
     <!-- chart -->
     <el-col class="mt-2rem">
+      <div id="top10Tags" style="width: 100%;height: 500px;"></div>
+    </el-col>
+    <el-col class="mt-2rem">
       <div id="lastThirtyDays" style="width: 100%;height: 500px;"></div>
     </el-col>
     <el-col class="mt-2rem">
@@ -261,6 +264,7 @@ export default {
       store
         .dispatch('dashboard/fetchDashboard', params)
         .catch(err => error({statusCode: 404})),
+        store.dispatch("dashboard/fetchTop10Tags", params),
       store.dispatch("dashboard/fetchLastThirtyDays", params),
       store.dispatch("dashboard/fetchHistory", params),
       store.dispatch("dashboard/fetchNewUsers", params),
@@ -271,6 +275,7 @@ export default {
   computed: {
     ...mapState({
       dashboard: state => state.dashboard.data,
+      tags: state => state.dashboard.top10Tags,
       lastThirtyDays: state => state.dashboard.lastThirtyDays,
       history: state => state.dashboard.history,
       users: state => state.dashboard.users,
@@ -289,6 +294,40 @@ export default {
     }
   },
   methods: {
+    // TODO: Top 10 charts
+    initTop10TagsCharts(data) {
+      let myChart = this.$echarts.init(document.getElementById('top10Tags'));
+      let option = {
+        title: {
+          text: 'Top10标签'
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'cross',
+            label: {
+              backgroundColor: '#6a7985'
+            }
+          }
+        },
+        xAxis: {
+          data: ['开源项目', 'kaggle', 'opencv', '经验分享', 'Test']
+          // data: data.tags
+        },
+        yAxis: {},
+        series: [
+          {
+            type: 'bar',
+            data: [3, 2, 2, 1, 1]
+            // data: data.numbers
+          }
+        ]
+      };
+
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+
+    },
     initLastThirtyDaysCharts(data) {
       let myChart = this.$echarts.init(document.getElementById('lastThirtyDays'));
       // 指定图表的配置项和数据
@@ -547,7 +586,25 @@ export default {
       _ts.$set(_ts, 'articleTags', article.articleTags);
       _ts.$set(_ts, 'tagsDialogVisible', true);
     },
-    toggleStatus() {},
+    toggleStatus(index, article) {
+      let _ts = this
+      // copy the object
+      let temp_articles = JSON.parse(JSON.stringify(_ts.articles))
+      if (index == 0) {
+        temp_articles.list.forEach(element => {
+          if (element.idArticle == article.idArticle) element.articleStatus = 1
+        })
+        _ts.$store.commit('updateNewArticlesData', temp_articles)
+        _ts.$message.success('已下架')
+      }else {
+        temp_articles.list.forEach(element => {
+          if (element.idArticle == article.idArticle) element.articleStatus = 0
+        })
+        _ts.$store.commit('updateNewArticlesData', temp_articles)
+        _ts.$message.success('已上架')
+      }
+      
+    },
     closeTagsDialog() {
       this.$set(this, 'tagsDialogVisible', false);
     },
@@ -600,6 +657,7 @@ export default {
     setTimeout(() => {
       this.initLastThirtyDaysCharts(this.lastThirtyDays)
       this.initHistoryCharts(this.history)
+      this.initTop10TagsCharts(this.top10Tags)
     }, 1000);
   }
 }

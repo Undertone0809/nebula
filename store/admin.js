@@ -81,6 +81,12 @@ export const mutations = {
       articles.articlePerfect = action.articlePerfect
     }
   },
+  updateArticleStatus(state, action) {
+    let articles = state.articles.list[action.index]
+    if (articles.idArticle === action.idArticle) {
+      articles.articleStatus = action.articleStatus
+    }
+  },
   updateTags(state, action) {
     state.tabs = action
   },
@@ -162,6 +168,34 @@ export const actions = {
 
     return this.$axios
       .$get(`${ADMIN_API_PATH}/articles`, {
+        params: data
+      })
+      .then(response => {
+        commit('updateFetching', false);
+        commit('updateArticlesData', response);
+      })
+      .catch(error => {
+        console.log(error);
+        commit('updateFetching', false);
+      });
+  },
+  // TODO modify here
+  fetchAllArticles({commit}, params = {}) {
+    if (params && params.reset === '0') {
+      return true;
+    }
+    // 清空已有数据
+    commit('updateArticlesData', getDefaultArticlesData())
+    commit('updateFetching', true)
+
+    let data = {
+      page: params.page || 1,
+      rows: params.rows || 10,
+      topicUri: 'news'
+    }
+
+    return this.$axios
+      .$get(`${ADMIN_API_PATH}/all-articles`, {
         params: data
       })
       .then(response => {

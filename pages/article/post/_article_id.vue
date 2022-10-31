@@ -305,12 +305,14 @@
             _ts.contentEditor.setValue('');
             _ts.$store.commit('article/clearDetailData')
             _ts.$set(_ts, 'notificationFlag', false);
-            _ts.$router.push({
-              path: `/article/${res}`
-            })
+            // TODO temporary modify
+            // _ts.$router.push({
+            //   path: `/article/${res}`
+            // })
+            _ts.$router.push({ path: `/` })
           }
         })
-
+        _ts.$message.success('发布成功，请等待管理员审核')
       },
       async saveArticle() {
         let _ts = this;

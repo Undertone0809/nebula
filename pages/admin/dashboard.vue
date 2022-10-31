@@ -46,23 +46,37 @@
             :data="articles.list"
             style="width: 100%">
             <el-table-column
-              label="#"
+              type="index"
               width="60"
               prop="idArticle">
             </el-table-column>
+            <!-- <el-table-column
+              label="id"
+              width="60"
+              prop="idArticle">
+            </el-table-column> -->
             <el-table-column
               label="标题"
               prop="articleTitle">
               <template slot-scope="scope">
                 <el-button type="text" @click="openLink(scope.row.articlePermalink)">{{ scope.row.articleTitle }}</el-button>
+                <el-tag
+                  style="margin-left: 0.3rem;"
+                  v-if="scope.row.articleStatus == 1"
+                  size="mini"
+                  type="danger"
+                  effect="plain">
+                  未审核
+                </el-tag>
               </template>
             </el-table-column>
             <el-table-column
               label="标签"
+              width="120"
               prop="articleTitle">
               <template slot-scope="scope">
                 <el-tag
-                  style="margin-left: 0.5rem;"
+                  style="margin-left: 0.3rem;"
                   v-for="tag in scope.row.tags"
                   :key="tag.idTag"
                   size="mini"
@@ -78,8 +92,8 @@
             </el-table-column>
             <el-table-column label="操作">
               <template slot-scope="scope">
-                <!-- <el-button v-if="scope.row.articlePerfect === '1'" size="mini" @click="cancelPreference(scope.$index, scope.row.idArticle)" plain>取消优选</el-button>
-                <el-button v-else size="mini" @click="setPreference(scope.$index, scope.row.idArticle)" plain>设为优选</el-button> -->
+                <el-button v-if="scope.row.articlePerfect === '1'" size="mini" @click="cancelPreference(scope.$index, scope.row.idArticle)" plain>取消优选</el-button>
+                <el-button v-else size="mini" @click="setPreference(scope.$index, scope.row.idArticle)" plain>设为优选</el-button>
                 <el-button size="mini" type="primary"
                            @click="updateTags(scope.$index, scope.row)" plain>编辑标签
                 </el-button>
@@ -87,7 +101,7 @@
                            @click="toggleStatus(scope.$index, scope.row)" plain>下架
                 </el-button>
                 <el-button v-else size="mini" type="success"
-                           @click="toggleStatus(scope.$index, scope.row)" plain>上架
+                           @click="toggleStatus(scope.$index, scope.row)" plain>审核通过
                 </el-button>
               </template>
             </el-table-column>
@@ -269,7 +283,7 @@ export default {
       store.dispatch("dashboard/fetchHistory", params),
       store.dispatch("dashboard/fetchNewUsers", params),
       store.dispatch("dashboard/fetchNewBankAccounts", params),
-      store.dispatch("dashboard/fetchNewArticles", params)
+      store.dispatch("admin/fetchAllArticles", params)
     ])
   },
   computed: {
@@ -280,7 +294,7 @@ export default {
       history: state => state.dashboard.history,
       users: state => state.dashboard.users,
       bankAccounts: state => state.dashboard.bankAccounts,
-      articles: state => state.dashboard.articles,
+      articles: state => state.admin.articles,
     })
   },
   data() {
@@ -539,46 +553,6 @@ export default {
     openLink(link) {
       window.open(link);
     },
-    setPreference(index, idArticle) {
-      let _ts = this;
-      _ts.$axios.$patch("/api/admin/article/update-perfect", {
-        idArticle: idArticle,
-        articlePerfect: '1'
-      }).then(function (res) {
-        if (res) {
-          if (res.success) {
-            _ts.$store.commit('admin/updateArticlePreference', {
-              index: index,
-              idArticle: idArticle,
-              articlePerfect: '1'
-            })
-            _ts.$message.success("设置成功!");
-          } else {
-            _ts.$message.error(_ts.message);
-          }
-        }
-      })
-    },
-    cancelPreference(index, idArticle) {
-      let _ts = this;
-      _ts.$axios.$patch("/api/article/update-perfect", {
-        idArticle: idArticle,
-        articlePerfect: '0'
-      }).then(function (res) {
-        if (res) {
-          if (res.success) {
-            _ts.$store.commit('admin/updateArticlePreference', {
-              index: index,
-              idArticle: idArticle,
-              articlePerfect: '0'
-            })
-            _ts.$message.success("取消成功!");
-          } else {
-            _ts.$message.error(_ts.message);
-          }
-        }
-      })
-    },
     updateTags(index, article) {
       let _ts = this
       _ts.$set(_ts, 'index', index);
@@ -586,38 +560,83 @@ export default {
       _ts.$set(_ts, 'articleTags', article.articleTags);
       _ts.$set(_ts, 'tagsDialogVisible', true);
     },
-    toggleStatus(index, article) {
+    // TODO  temporary modify
+    toggleStatus(index, article) {     
       let _ts = this
-      // copy the object
-      let temp_articles = JSON.parse(JSON.stringify(_ts.articles))
-      if (index == 0) {
-        temp_articles.list.forEach(element => {
-          if (element.idArticle == article.idArticle) element.articleStatus = 1
-        })
-        _ts.$store.commit('updateNewArticlesData', temp_articles)
-        _ts.$message.success('已下架')
-      }else {
-        temp_articles.list.forEach(element => {
-          if (element.idArticle == article.idArticle) element.articleStatus = 0
-        })
-        _ts.$store.commit('updateNewArticlesData', temp_articles)
-        _ts.$message.success('已上架')
-      }
       
+      // normal
+      if (article.articleStatus == 0) {
+        _ts.$axios.$patch("/api/admin/article/update-status", {
+          idArticle: article.idArticle,
+          articleStatus: '1'
+        }).then(res => {         
+          _ts.$store.commit('admin/updateArticleStatus', {
+            index: index,
+            idArticle: article.idArticle,
+            articleStatus: '1'
+          })   
+        })
+        _ts.$message.success("已下架");
+      } 
+      
+      // unnormal
+      if (article.articleStatus == 1) {     
+        _ts.$axios.$patch('/api/admin/article/update-status', {
+          idArticle: article.idArticle,
+          articleStatus: '0'
+        }).then(res => {
+          _ts.$store.commit('admin/updateArticleStatus', {
+            index: index,
+            idArticle: article.idArticle,
+            articleStatus: '0'
+          })
+        })
+        _ts.$message.success("审核上线");
+      }
+    },
+    setPreference(index, idArticle) {
+      let _ts = this;
+      _ts.$axios.$patch("/api/admin/article/update-perfect", {
+        idArticle: idArticle,
+        articlePerfect: '1'
+        // TODO
+      }).then(res => {        
+        _ts.$store.commit('admin/updateArticlePreference', {
+          index: index,
+          idArticle: idArticle,
+          articlePerfect: '1'
+        })
+        _ts.$message.success("设置成功!");
+      })
+    },
+    cancelPreference(index, idArticle) {
+      let _ts = this;
+      _ts.$axios.$patch("/api/admin/article/update-perfect", {
+        idArticle: idArticle,
+        articlePerfect: '0'
+      }).then(res => {
+        _ts.$store.commit('admin/updateArticlePreference', {
+          index: index,
+          idArticle: idArticle,
+          articlePerfect: '0'
+        })
+        _ts.$message.success("取消成功!");
+             
+      })
     },
     closeTagsDialog() {
       this.$set(this, 'tagsDialogVisible', false);
     },
     handleArticleSizeChange(pageSize) {
       let _ts = this;
-      _ts.$store.dispatch('dashboard/fetchNewArticles', {
+      _ts.$store.dispatch('admin/fetchAllArticles', {
         page: _ts.pageNum,
         rows: pageSize
       })
     },
     handleArticleCurrentChange(page) {
       let _ts = this;
-      _ts.$store.dispatch('dashboard/fetchNewArticles', {
+      _ts.$store.dispatch('admin/fetchAllArticles', {
         page: page,
         rows: _ts.pageSize
       })
@@ -653,7 +672,7 @@ export default {
   },
   mounted() {
     this.$store.commit("setActiveMenu", "admin-dashboard");
-    // TODO temporarily solve the problem that can not render echart firstly.
+    // TODO commit to master
     setTimeout(() => {
       this.initLastThirtyDaysCharts(this.lastThirtyDays)
       this.initHistoryCharts(this.history)

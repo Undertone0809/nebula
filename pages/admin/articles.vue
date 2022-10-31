@@ -64,7 +64,7 @@
                        @click="toggleStatus(scope.$index, scope.row)" plain>下架
             </el-button>
             <el-button v-else size="mini" type="success"
-                       @click="toggleStatus(scope.$index, scope.row)" plain>上架
+                       @click="toggleStatus(scope.$index, scope.row)" plain>审核通过
             </el-button>
           </template>
         </el-table-column>

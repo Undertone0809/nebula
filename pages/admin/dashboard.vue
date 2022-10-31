@@ -677,7 +677,7 @@ export default {
       this.initLastThirtyDaysCharts(this.lastThirtyDays)
       this.initHistoryCharts(this.history)
       this.initTop10TagsCharts(this.top10Tags)
-    }, 1000);
+    }, 500);
   }
 }
 </script>

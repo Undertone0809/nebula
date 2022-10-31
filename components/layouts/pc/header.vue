@@ -18,7 +18,7 @@
         <el-menu-item index="topic">专题</el-menu-item>
         <el-menu-item index="portfolios">作品集</el-menu-item>
         <!-- <el-menu-item index="products">产品</el-menu-item> -->
-        <!-- <el-menu-item index="open-data">开放数据</el-menu-item> -->
+        <el-menu-item index="open-data">开放数据</el-menu-item>
       </el-menu>
     </el-col>
 

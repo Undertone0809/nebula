@@ -54,9 +54,9 @@
                     <el-button size="mini" v-if="hasPermissions" @click="handleCommand('edit')" plain>编辑文章</el-button>
                     <template v-if="isAdmin">
                       <el-button size="mini" @click="handleCommand('editTag')" plain>编辑标签</el-button>
-                      <!-- TODO -->
-                      <!-- <el-button v-if="isPerfect" size="mini" @click="cancelPreference" plain>取消优选</el-button> -->
-                      <!-- <el-button v-else size="mini" @click="setPreference" plain>设为优选</el-button> -->
+                      <!-- TODO hidden the preference button -->
+                      <el-button v-if="isPerfect" size="mini" @click="cancelPreference" plain>取消优选</el-button>
+                      <el-button v-else size="mini" @click="setPreference" plain>设为优选</el-button>
                     </template>
                     <template v-else-if="hasPermissions">
                       <el-button size="mini" @click="handleCommand('editTag')" plain>编辑标签</el-button>
@@ -335,36 +335,26 @@ export default {
         _ts.gotoLogin();
       }
     },
+    // TODO commit to master
     setPreference() {
       let _ts = this;
       _ts.$axios.$patch("/api/admin/article/update-perfect", {
         idArticle: _ts.article.idArticle,
         articlePerfect: '1',
       }).then(function (res) {
-        if (res) {
-          if (res.success) {
-            _ts.$set(_ts, 'isPerfect', false);
-            _ts.$message.success("设置成功!");
-          } else {
-            _ts.$message.error(_ts.message);
-          }
-        }
+        _ts.isPerfect = !_ts.isPerfect;
+        _ts.$message.success("设置成功!");
       })
     },
+    // TODO commit to master
     cancelPreference() {
       let _ts = this;
       _ts.$axios.$patch("/api/admin/article/update-perfect", {
         idArticle: _ts.article.idArticle,
         articlePerfect: '0',
       }).then(function (res) {
-        if (res) {
-          if (res.success) {
-            _ts.$set(_ts, 'isPerfect', true);
-            _ts.$message.success("取消成功!");
-          } else {
-            _ts.$message.error(_ts.message);
-          }
-        }
+        _ts.isPerfect = !_ts.isPerfect;
+        _ts.$message.success("取消成功!");
       })
     },
     thumbsUp() {
